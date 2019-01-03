@@ -62,23 +62,18 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+a1 = [ones(m,1) X];
+a2 = sigmoid(a1*Theta1');
+a2 = [ones(m,1) a2];
+a3 = sigmoid(a2*Theta2');
+y = repmat([1:num_labels], m, 1) == repmat(y, 1, num_labels);
+J = (-1 / m) * sum(sum(y.*log(a3) + (1 - y).*log(1 - a3)));
 
+regTheta1 =  Theta1(:,2:end);
+regTheta2 =  Theta2(:,2:end);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+reg_error = (lambda/(2*m)) * (sum(sum(regTheta1.^2)) + sum(sum(regTheta2.^2)));
+J = J + reg_error;
 
 % -------------------------------------------------------------
 
