@@ -1,4 +1,4 @@
-# Autodidacticism
+# Autodidactism
 
 1. Machine_Learning
 2. Big_Data
