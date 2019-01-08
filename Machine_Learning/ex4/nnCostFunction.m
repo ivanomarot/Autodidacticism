@@ -75,6 +75,24 @@ regTheta2 =  Theta2(:,2:end);
 reg_error = (lambda/(2*m)) * (sum(sum(regTheta1.^2)) + sum(sum(regTheta2.^2)));
 J = J + reg_error;
 
+delta1 = zeros(size(Theta1));
+delta2 = zeros(size(Theta2));
+
+for t = 1:m
+	a1t = a1(t,:);
+	a2t = a2(t,:);
+	a3t = a3(t,:);
+	yt = y(t,:);
+	d3 = a3t - yt;
+	d2 = Theta2'*d3' .* sigmoidGradient([1;Theta1 * a1t']);
+	delta1 = delta1 + d2(2:end)*a1t;
+	delta2 = delta2 + d3' * a2t;
+end
+
+Theta1_grad = 1/m * delta1 + (lambda/m)*[zeros(size(Theta1, 1), 1) regTheta1];
+Theta2_grad = 1/m * delta2 + (lambda/m)*[zeros(size(Theta2, 1), 1) regTheta2];
+
+
 % -------------------------------------------------------------
 
 % =========================================================================
